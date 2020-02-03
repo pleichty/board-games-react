@@ -1,0 +1,1 @@
+export const BGG_API_BASE_URL='https://api.geekdo.com/xmlapi2';
