@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Axios from 'axios'
 import { BGG_API_BASE_URL } from '../constants/api'
 import { parseString } from 'xml2js'
+import { htmlDecode } from '../helpers/formatting'
 
 export class BoardGame extends Component {
     state = {
@@ -10,13 +11,7 @@ export class BoardGame extends Component {
         name: [],
         description: ''
     }
-    htmlDecode(input){
-        var e = document.createElement('div');
-        e.innerHTML = input;
-        
-        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-      }
-      
+
     componentDidMount() {
         Axios.get(`${BGG_API_BASE_URL}/thing?id=${this.props.id}`)
         .then(res => {
@@ -30,14 +25,12 @@ export class BoardGame extends Component {
         })
     }
 
-
-
     render() {
         return (
             <div>
                 <span>{this.state.name}</span>
                 <img src={this.state.thumbnail} alt='cannot load'/>
-                <p>{this.htmlDecode(this.state.description)}</p>
+                <p>{htmlDecode(this.state.description)}</p>
             </div>
         )
     }
